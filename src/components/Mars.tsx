@@ -4,6 +4,21 @@ import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 
 /* =======================
+   WebGL check
+======================= */
+const isWebGLAvailable = (): boolean => {
+  try {
+    const canvas = document.createElement('canvas');
+    return !!(
+      window.WebGLRenderingContext &&
+      (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+    );
+  } catch {
+    return false;
+  }
+};
+
+/* =======================
    MARS SHADER
 ======================= */
 const MarsShader = {
@@ -20,11 +35,11 @@ const MarsShader = {
         f.z
       );
     }
-    float fbm(vec3 p) { float v=0.0; float a=0.5; for(int i=0;i<5;i++){ v+=a*noise(p); p*=2.0; a*=0.5; } return v; }
+    float fbm(vec3 p) { float v=0.0; float a=0.5; for(int i=0;i<4;i++){ v+=a*noise(p); p*=2.0; a*=0.5; } return v; }
     void main() {
       vNormal = normalize(normalMatrix * normal);
       vec3 pos = position;
-      float d = fbm(position*2.0)*0.05;
+      float d = fbm(position*2.0)*0.03;
       pos += normal*d;
       vPosition = pos;
       gl_Position = projectionMatrix * modelViewMatrix * vec4(pos,1.0);
@@ -44,7 +59,7 @@ const MarsShader = {
         f.z
       );
     }
-    float fbm(vec3 p){ float v=0.0; float a=0.5; for(int i=0;i<6;i++){ v+=a*noise(p); p*=2.0; a*=0.5;} return v; }
+    float fbm(vec3 p){ float v=0.0; float a=0.5; for(int i=0;i<4;i++){ v+=a*noise(p); p*=2.0; a*=0.5;} return v; }
     void main() {
       vec3 rp=vec3(
         vPosition.x*cos(time*0.1)-vPosition.z*sin(time*0.1),
@@ -52,7 +67,7 @@ const MarsShader = {
         vPosition.x*sin(time*0.1)+vPosition.z*cos(time*0.1)
       );
       float n1=fbm(rp*3.0);
-      float n2=fbm(rp*8.0);
+      float n2=fbm(rp*6.0);
       vec3 darkRed=vec3(0.35,0.15,0.1);
       vec3 red=vec3(0.7,0.25,0.15);
       vec3 orange=vec3(0.9,0.4,0.25);
@@ -79,9 +94,9 @@ const Mars: React.FC<{ radius: number }> = ({ radius }) => {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
 
   useFrame((state, delta) => {
-  if (meshRef.current) meshRef.current.rotation.y += 0.1 * delta;
-  if (materialRef.current) materialRef.current.uniforms.time.value = state.clock.elapsedTime;
-});
+    if (meshRef.current) meshRef.current.rotation.y += 0.05 * delta;
+    if (materialRef.current) materialRef.current.uniforms.time.value = state.clock.elapsedTime;
+  });
 
   return (
     <group>
@@ -94,19 +109,11 @@ const Mars: React.FC<{ radius: number }> = ({ radius }) => {
           uniforms={{ time: { value: 0 } }}
         />
       </mesh>
-
-      {/* Glow / Atmosphere */}
       <mesh scale={1.08}>
         <sphereGeometry args={[radius, 64, 64]} />
-        <meshBasicMaterial
-          color="#ff6633"
-          transparent
-          opacity={0.08}
-          side={THREE.BackSide}
-        />
+        <meshBasicMaterial color="#ff6633" transparent opacity={0.08} side={THREE.BackSide} />
       </mesh>
-
-      <pointLight intensity={1.5} color="#ff5522" distance={radius * 3} />
+      <pointLight intensity={1.2} color="#ff5522" distance={radius * 3} />
     </group>
   );
 };
@@ -135,53 +142,38 @@ const Moon: React.FC<{ marsRadius: number }> = ({ marsRadius }) => {
   return (
     <mesh ref={meshRef}>
       <sphereGeometry args={[marsRadius * 0.08, 20, 20]} />
-      <meshStandardMaterial 
-        color="#a0a0a0" 
-        metalness={0.3} 
-        roughness={0.9}
-        bumpScale={0.02}
-      />
+      <meshStandardMaterial color="#a0a0a0" metalness={0.3} roughness={0.9} />
     </mesh>
   );
 };
 
 /* =======================
-   SCENE COMPONENT
+   MAIN SCENE
 ======================= */
 const Scene: React.FC = () => {
   const [marsRadius, setMarsRadius] = useState(1.8);
-  const [topOffset, setTopOffset] = useState(0); // default 0px
 
   useEffect(() => {
     const handleResize = () => {
-      let radius = 1.8;
-      let top = 0;
-
-      if (window.innerWidth < 640) { // sm
-        radius = 1.0;
-        top = -20; // kichik ekranda biroz yuqoriga siljitish
-      } else if (window.innerWidth < 1024) { // md
-        radius = 1.4;
-        top = -40;
-      } else { // lg va katta
-        radius = 1.8;
-        top = -60;
-      }
-
-      setMarsRadius(radius);
-      setTopOffset(top);
+      if (window.innerWidth < 640) setMarsRadius(1.0);
+      else if (window.innerWidth < 1024) setMarsRadius(1.4);
+      else setMarsRadius(1.8);
     };
-
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  if (!isWebGLAvailable()) {
+    return (
+      <div className="text-white text-center py-12">
+        WebGL qo'llab-quvvatlanmaydi
+      </div>
+    );
+  }
+
   return (
-    <div
-      className="absolute z-100 left-0 right-0 m-auto w-full h-screen"
-      style={{ top: `${topOffset}px` }}
-    >
+    <div className="absolute inset-0 w-full h-screen">
       <Canvas camera={{ position: [0, 0, 6], fov: 50 }}>
         <fog attach="fog" args={['#000000', 5, 15]} />
         <ambientLight intensity={0.15} />

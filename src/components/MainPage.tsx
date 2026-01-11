@@ -6,7 +6,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import IcePlanetSection from "./IcyPlanet";
 import LastSection from "./LastSection";
-// import Scene from "./Mars";
+import Scene from "./Mars";
 import Questions from "./Questions";
 import Section1 from "./Section1";
 import Section3 from "./Section3";
@@ -64,12 +64,12 @@ const MainPage: React.FC<MainProps> = ({ onMusic }) => {
       </div>
 
       {/* MARS SCENE */}
-      {/* <section
+      <section
         id="mars"
         className="relative z-100 -top-110 w-full mt-20 section"
       >
         <Scene />
-      </section> */}
+      </section>
 
       {/* SECTION 1 */}
       <section
