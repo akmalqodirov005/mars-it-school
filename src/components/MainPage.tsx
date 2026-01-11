@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -21,7 +21,9 @@ interface MainProps {
 
 const MainPage: React.FC<MainProps> = ({ onMusic }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
+  // GSAP scroll animation
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -50,6 +52,19 @@ const MainPage: React.FC<MainProps> = ({ onMusic }) => {
     };
   }, []);
 
+  // Detect mobile
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 640);
+    };
+
+    handleResize(); // initial check
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div
       ref={containerRef}
@@ -64,12 +79,14 @@ const MainPage: React.FC<MainProps> = ({ onMusic }) => {
       </div>
 
       {/* MARS SCENE */}
-      <section
-        id="mars"
-        className="relative z-100 -top-110 w-full mt-20 section"
-      >
-        <Scene />
-      </section>
+      {!isMobile && (
+        <section
+          id="mars"
+          className="relative z-100 -top-110 w-full mt-20 section"
+        >
+          <Scene />
+        </section>
+      )}
 
       {/* SECTION 1 */}
       <section

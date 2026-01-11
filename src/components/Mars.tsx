@@ -4,21 +4,6 @@ import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 
 /* =======================
-   WebGL check
-======================= */
-const isWebGLAvailable = (): boolean => {
-  try {
-    const canvas = document.createElement('canvas');
-    return !!(
-      window.WebGLRenderingContext &&
-      (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
-    );
-  } catch {
-    return false;
-  }
-};
-
-/* =======================
    MARS SHADER
 ======================= */
 const MarsShader = {
@@ -152,24 +137,31 @@ const Moon: React.FC<{ marsRadius: number }> = ({ marsRadius }) => {
 ======================= */
 const Scene: React.FC = () => {
   const [marsRadius, setMarsRadius] = useState(1.8);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 640) setMarsRadius(1.0);
-      else if (window.innerWidth < 1024) setMarsRadius(1.4);
-      else setMarsRadius(1.8);
+      const width = window.innerWidth;
+      if (width < 640) {
+        setIsMobile(true); // mobil
+        setMarsRadius(1.0);
+      } else if (width < 1024) {
+        setIsMobile(false);
+        setMarsRadius(1.4);
+      } else {
+        setIsMobile(false);
+        setMarsRadius(1.8);
+      }
     };
+
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  if (!isWebGLAvailable()) {
-    return (
-      <div className="text-white text-center py-12">
-        WebGL qo'llab-quvvatlanmaydi
-      </div>
-    );
+  if (isMobile) {
+    // Mobil qurilmalarda sahna chiqmasin
+    return null;
   }
 
   return (

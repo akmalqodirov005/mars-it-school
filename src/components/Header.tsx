@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
 
   const toggleMusic = () => setIsMuted((p) => !p);
 
-  // 🔹 Bars animation faqat desktop headerda ishlaydi va menu ochilganda to‘xtaydi
+  // Bars animation desktop va mobile uchun ishlaydi
   useEffect(() => {
     if (!isMuted && !showMenu) {
       const interval = setInterval(() => {
@@ -29,12 +29,11 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
       }, 120);
       return () => clearInterval(interval);
     } else {
-      // Menu ochilganda yoki music muted bo‘lganda bars reset qilinadi
       setBars(new Array(8).fill(4));
     }
   }, [isMuted, showMenu]);
 
-  // 🔹 Telegramga ariza yuborish
+  // Telegramga ariza yuborish
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -74,7 +73,7 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            {/* 🔹 Audio faqat desktop headerda ishlaydi */}
+            {/* Audio faqat muted holatda ishlaydi */}
             <audio autoPlay loop muted={isMuted} src="/space-music.mp3" />
 
             <div className="container mx-auto flex items-center justify-between px-4 h-16 bg-black/70 backdrop-blur-md rounded-2xl">
@@ -89,7 +88,7 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
                   📞 +998 (78) 777-77-57
                 </a>
 
-                {/* 🔹 Music bars */}
+                {/* Music bars - desktop */}
                 <button
                   onClick={toggleMusic}
                   className="flex gap-1 items-end h-5"
@@ -105,7 +104,7 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
                   ))}
                 </button>
 
-                {/* 🔹 Ariza button */}
+                {/* Ariza button */}
                 <button
                   onClick={() => setShowModal(true)}
                   className="border border-orange-400 text-orange-400 px-4 py-2 rounded-lg hover:bg-orange-400 hover:text-black transition-all duration-200"
@@ -114,14 +113,33 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
                 </button>
               </div>
 
-              {/* ========================= MOBILE MENU BUTTON ========================= */}
-              <button
-                onClick={() => setShowMenu(true)}
-                className="md:hidden text-white text-2xl hover:text-orange-400 transition-colors duration-200"
-                aria-label="Open menu"
-              >
-                ☰
-              </button>
+              {/* ========================= MOBILE ========================= */}
+              <div className="flex md:hidden items-center gap-4">
+                {/* Music bars mobile */}
+                <button
+                  onClick={toggleMusic}
+                  className="flex gap-0.5 items-end h-4"
+                  aria-label="Toggle music"
+                >
+                  {bars.map((h, i) => (
+                    <motion.div
+                      key={i}
+                      className={`w-0.5 ${isMuted ? "bg-white" : "bg-orange-400"}`}
+                      animate={{ height: h / 2 }} // mobile uchun kichikroq
+                      transition={{ duration: 0.12 }}
+                    />
+                  ))}
+                </button>
+
+                {/* Menu button */}
+                <button
+                  onClick={() => setShowMenu(true)}
+                  className="text-white text-2xl hover:text-orange-400 transition-colors duration-200"
+                  aria-label="Open menu"
+                >
+                  ☰
+                </button>
+              </div>
             </div>
           </motion.header>
         )}
@@ -217,7 +235,6 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="bg-liniar-to-br from-gray-900 to-black border-2 border-orange-400 rounded-2xl p-8 w-full max-w-md relative shadow-2xl">
-                {/* Close button */}
                 <button
                   onClick={() => setShowModal(false)}
                   className="absolute top-4 right-4 text-white hover:text-orange-400 text-2xl transition-colors"
@@ -226,12 +243,10 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
                   ✕
                 </button>
 
-                {/* Title */}
                 <h2 className="text-2xl font-bold text-white mb-6 text-center">
                   🪐 Ariza yuborish
                 </h2>
 
-                {/* Form */}
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <input
@@ -270,9 +285,8 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
                   </button>
                 </form>
 
-                {/* Telegram link */}
                 <p className="mt-4 text-gray-400 text-sm text-center">
-                  Agar yana savollaringiz bo‘lsa, murojaat qilishingiz mumkin:{" "}
+                  Agar savollaringiz bo‘lsa, murojaat qilishingiz mumkin:{" "}
                   <a
                     href="https://t.me/mars_it_school"
                     target="_blank"
