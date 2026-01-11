@@ -17,51 +17,7 @@ Loyiha **React + TypeScript** asosida yozilgan bo‘lib, kuchli animatsiyalar, 3
 
 ---
 
-## 📁 Project Structure
-
-```text
-src/
-├── assets/
-├── components/
-├── App.tsx
-├── main.tsx
-└── index.css
-
-
-⸻
-
-⚙️ O‘rnatish
-
-git clone https://github.com/akmalqodirov005/mars-itschool.git
-cd mars-itschool
-npm install
-
-
-⸻
-
-▶️ Ishga tushirish
-
-npm run dev
-
-Brauzerda:
-
-http://localhost:5173
-
-
-⸻
-
-🧩 Asosiy imkoniyatlar (Features)
-	•	✅ To‘liq responsive dizayn (mobile / tablet / desktop)
-	•	✅ TypeScript bilan type-safe kod
-	•	✅ Framer Motion orqali silliq animatsiyalar
-	•	✅ Three.js bilan 3D effektlar
-	•	✅ Typewriter effect bilan interaktiv matnlar
-	•	✅ Telegram bot orqali arizalarni avtomatik yuborish
-	•	✅ Toza va scalable arxitektura
-
-⸻
-
-## 📸 Screenshots
+## Screenshots
 
 ### First Section
 ![First](./screenshots/First.png)
@@ -96,6 +52,49 @@ http://localhost:5173
 ### Taklif Section
 ![Taklif](./screenshots/Taklif.png)
 
+---
+
+## 📁 Project Structure
+
+```text
+src/
+├── assets/
+├── components/
+├── App.tsx
+├── main.tsx
+└── index.css
+
+⸻
+
+⚙️ O‘rnatish
+
+git clone https://github.com/akmalqodirov005/mars-itschool.git
+cd mars-itschool
+npm install
+
+
+⸻
+
+▶️ Ishga tushirish
+
+npm run dev
+
+Brauzerda:
+
+http://localhost:5173
+
+
+⸻
+
+🧩 Asosiy imkoniyatlar (Features)
+	•	✅ To‘liq responsive dizayn (mobile / tablet / desktop)
+	•	✅ TypeScript bilan type-safe kod
+	•	✅ Framer Motion orqali silliq animatsiyalar
+	•	✅ Three.js bilan 3D effektlar
+	•	✅ Typewriter effect bilan interaktiv matnlar
+	•	✅ Telegram bot orqali arizalarni avtomatik yuborish
+	•	✅ Toza va scalable arxitektura
+
 ⸻
 
 👤 Muallif
@@ -104,5 +103,3 @@ Akmal Qodirov
 Frontend Developer (React / TypeScript)
 	•	GitHub: https://github.com/akmalqodirov005
 	•	Telegram: @akmaldev_1
-
-⸻
