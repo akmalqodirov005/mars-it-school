@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import Header from "./Header";
 import Footer from "./Footer";
-// import IcePlanetSection from "./IcyPlanet";
+import IcePlanetSection from "./IcyPlanet";
 import LastSection from "./LastSection";
 // import Scene from "./Mars";
 import Questions from "./Questions";
@@ -63,8 +63,8 @@ const MainPage: React.FC<MainProps> = ({ onMusic }) => {
         <Header onMusic={onMusic} />
       </div>
 
-      {/* MARS SCENE
-      <section
+      {/* MARS SCENE */}
+      {/* <section
         id="mars"
         className="relative z-100 -top-110 w-full mt-20 section"
       >
@@ -79,13 +79,13 @@ const MainPage: React.FC<MainProps> = ({ onMusic }) => {
         <Section1 />
       </section>
 
-      {/* ICE PLANET
+      {/* ICE PLANET */}
       <section
         id="section2"
         className="relative w-full px-4 section"
       >
         <IcePlanetSection />
-      </section> */}
+      </section>
 
       {/* SECTION 3 */}
       <section
