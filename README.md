@@ -1,73 +1,108 @@
-# React + TypeScript + Vite
+# 🚀 Mars IT School – Landing Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Bu loyiha **Mars IT School** uchun ishlab chiqilgan zamonaviy va interaktiv **landing page** hisoblanadi.  
+Loyiha **React + TypeScript** asosida yozilgan bo‘lib, kuchli animatsiyalar, 3D vizual effektlar va Telegram bot bilan integratsiyani o‘z ichiga oladi.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠 Texnologiyalar
 
-## React Compiler
+- ⚛️ React
+- 🟦 TypeScript
+- 🎨 Tailwind CSS
+- 🎞 Framer Motion
+- ✍️ Typewriter Effect
+- 🌌 Three.js
+- 🤖 Telegram Bot API
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 📁 Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```text
+src/
+├── assets/
+├── components/
+├── App.tsx
+├── main.tsx
+└── index.css
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+⸻
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+⚙️ O‘rnatish
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+git clone https://github.com/akmalqodirov005/mars-itschool.git
+cd mars-itschool
+npm install
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+⸻
+
+▶️ Ishga tushirish
+
+npm run dev
+
+Brauzerda:
+
+http://localhost:5173
+
+
+⸻
+
+🧩 Asosiy imkoniyatlar (Features)
+	•	✅ To‘liq responsive dizayn (mobile / tablet / desktop)
+	•	✅ TypeScript bilan type-safe kod
+	•	✅ Framer Motion orqali silliq animatsiyalar
+	•	✅ Three.js bilan 3D effektlar
+	•	✅ Typewriter effect bilan interaktiv matnlar
+	•	✅ Telegram bot orqali arizalarni avtomatik yuborish
+	•	✅ Toza va scalable arxitektura
+
+⸻
+
+## 📸 Screenshots
+
+### First Section
+![First](./screenshots/First.png)
+
+### Home Section
+![Home](./screenshots/Home.png)
+
+### Ariza Section
+![Ariza](./screenshots/Ariza.png)
+
+### Batafsil Section
+![Batafsil](./screenshots/Batafsil.png)
+
+### Qisqacha Section
+![Qisqacha](./screenshots/Qisqacha.png)
+
+### Talim Section
+![Talim](./screenshots/Talim.png)
+
+### Qulaylik Section
+![Qulaylik](./screenshots/Qulaylik.png)
+
+### Asoschilar Section
+![Asoschilar](./screenshots/Asoschilar.png)
+
+### Filiallar Section
+![Filiallar](./screenshots/Filiallar.png)
+
+### Savollar Section
+![Savollar](./screenshots/Savollar.png)
+
+### Taklif Section
+![Taklif](./screenshots/Taklif.png)
+
+⸻
+
+👤 Muallif
+
+Akmal Qodirov
+Frontend Developer (React / TypeScript)
+	•	GitHub: https://github.com/akmalqodirov005
+	•	Telegram: @akmaldev_1
+
+⸻
