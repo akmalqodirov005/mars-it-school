@@ -13,13 +13,41 @@ const BOT_TOKEN = "8054934037:AAGBYyErwpsaSC2iiJ79rbDVUngW-VrBquk";
 const CHAT_ID = "856407175";
 
 const branches = [
-  { img: Beruniy, title: "1-Filial", text: "Toshkent sh, Beruniy ko'chasi 35A." },
-  { img: Yunusobod, title: "2-Filial", text: "Yunusobod tumani, Yangishahar 10." },
-  { img: Chilonzor, title: "3-Filial", text: "Chilonzor tumani, 8-kvartal, 2-uy." },
-  { img: Chilonzor, title: "4-Filial", text: "Chilonzor tumani, 8-kvartal, 2-uy." },
-  { img: Sergeli, title: "5-Filial", text: "Sergeli tumani, Sug'diyona mahallasi." },
-  { img: Mirobod, title: "6-Filial", text: "Mirobod tumani, Taras Shevchenko 24." },
-  { img: Yunusobod2, title: "7-Filial", text: "Yunusobod tumani, Kiyev massivi 3A." },
+  {
+    img: Beruniy,
+    title: "1-Filial",
+    text: "Toshkent sh, Beruniy ko'chasi 35A.",
+  },
+  {
+    img: Yunusobod,
+    title: "2-Filial",
+    text: "Yunusobod tumani, Yangishahar 10.",
+  },
+  {
+    img: Chilonzor,
+    title: "3-Filial",
+    text: "Chilonzor tumani, 8-kvartal, 2-uy.",
+  },
+  {
+    img: Chilonzor,
+    title: "4-Filial",
+    text: "Chilonzor tumani, 8-kvartal, 2-uy.",
+  },
+  {
+    img: Sergeli,
+    title: "5-Filial",
+    text: "Sergeli tumani, Sug'diyona mahallasi.",
+  },
+  {
+    img: Mirobod,
+    title: "6-Filial",
+    text: "Mirobod tumani, Taras Shevchenko 24.",
+  },
+  {
+    img: Yunusobod2,
+    title: "7-Filial",
+    text: "Yunusobod tumani, Kiyev massivi 3A.",
+  },
 ];
 
 const Section6 = () => {
@@ -73,7 +101,13 @@ const Section6 = () => {
         </h1>
 
         {/* ===== HORIZONTAL SCROLL KARUSEL ===== */}
-        <div className="mt-10 flex gap-4 overflow-x-auto py-5 px-2 snap-x snap-mandatory">
+        <div
+          style={{
+            scrollBehavior: "smooth", // Smooth scroll
+            WebkitOverflowScrolling: "touch", // Mobil uchun inertial scroll
+          }}
+          className="mt-10 flex gap-4 overflow-x-auto py-5 px-2 snap-x snap-mandatory"
+        >
           {branches.map((item, i) => (
             <motion.div
               key={i}
@@ -83,7 +117,9 @@ const Section6 = () => {
               <img src={item.img} className="w-full h-36 object-cover" />
 
               <div className="p-3 space-y-1 text-left">
-                <h3 className="text-md font-semibold text-orange-400">{item.title}</h3>
+                <h3 className="text-md font-semibold text-orange-400">
+                  {item.title}
+                </h3>
                 <p className="text-gray-300 text-xs truncate">{item.text}</p>
 
                 <button

@@ -47,27 +47,27 @@ const Questions = () => {
   };
 
   return (
-    <section className="py-10 px-6 text-white">
+    <section className="py-10 px-4 sm:py-10 sm:px-6 text-white">
       <div className="max-w-4xl mx-auto">
         {/* Title */}
-        <h1 className="text-2xl sm:text-xl md:text-3xl lg:text-4xl font-bold text-center mb-16">
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-12 sm:mb-16">
           Ko'p so'raladigan savollar
         </h1>
 
         {/* FAQ list */}
         <div className="divide-y divide-gray-200 border-t border-b">
           {faqs.map((item, index) => (
-            <div key={index} className="py-6">
+            <div key={index} className="py-4 sm:py-6">
               {/* Question row */}
               <button
                 onClick={() => toggle(index)}
                 className="w-full flex justify-between items-center text-left"
               >
-                <h3 className="text-lg sm:text-base md:text-xl font-semibold">
+                <h3 className="text-base sm:text-lg md:text-xl font-semibold">
                   {item.q}
                 </h3>
 
-                <span className="text-2xl sm:text-xl md:text-2xl font-light transition">
+                <span className="text-xl sm:text-2xl md:text-2xl font-light transition">
                   {activeIndex === index ? "×" : "+"}
                 </span>
               </button>
@@ -77,12 +77,12 @@ const Questions = () => {
                 className={`grid transition-all duration-300 ease-in-out
                 ${
                   activeIndex === index
-                    ? "grid-rows-[1fr] opacity-100 mt-4"
+                    ? "grid-rows-[1fr] opacity-100 mt-3 sm:mt-4"
                     : "grid-rows-[0fr] opacity-0"
                 }`}
               >
                 <div className="overflow-hidden">
-                  <p className="leading-relaxed text-sm sm:text-xs md:text-base">
+                  <p className="leading-snug text-sm sm:text-base md:text-base">
                     {item.a}
                   </p>
                 </div>

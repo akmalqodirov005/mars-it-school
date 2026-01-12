@@ -32,24 +32,30 @@ const Section1: React.FC = () => {
       <AnimatePresence>
         {showModal && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center"
+            className="fixed inset-0 z-50 flex items-start justify-center pt-24 sm:pt-32"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setShowModal(false)} // 👈 TASHQARISI BOSILSA
+            onClick={() => setShowModal(false)}
           >
             {/* Overlay */}
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-md" />
+            <motion.div
+              className="absolute inset-0 bg-black/60 backdrop-blur-md"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            />
 
             {/* MODAL */}
             <motion.div
               className="relative bg-white text-gray-900 w-full max-w-xs sm:max-w-3xl
                    rounded-2xl p-4 sm:p-8 shadow-2xl mx-4"
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
-              transition={{ duration: 0.25 }}
-              onClick={(e) => e.stopPropagation()} // 👈 MODAL ICHI BOSILSA YOPILMAYDI
+              initial={{ scale: 0.9, y: -20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: -20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              onClick={(e) => e.stopPropagation()}
             >
               <h3 className="text-xl sm:text-3xl font-bold text-center">
                 Nima uchun bizga ishonishingiz kerak?
@@ -73,10 +79,6 @@ const Section1: React.FC = () => {
                 <StatCard
                   title="7 ta filial"
                   text="Toshkent bo‘ylab zamonaviy va qulay joylar"
-                />
-                <StatCard
-                  title="50+ o‘qituvchi"
-                  text="Tanlovdan o‘tgan professional mentorlar"
                 />
               </div>
 

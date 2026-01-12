@@ -255,22 +255,20 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
                     />
                   </div>
 
-                  <div className="flex gap-2">
-                    <span className="px-4 py-2 bg-black/50 border border-orange-400/50 rounded-lg text-white">
-                      +998
-                    </span>
-                    <input
-                      type="tel"
-                      value={phone}
-                      onChange={(e) =>
-                        setPhone(e.target.value.replace(/\D/g, ""))
-                      }
-                      required
-                      maxLength={9}
-                      className="flex-1 px-4 py-2 rounded-lg bg-black/50 text-white border border-orange-400/50 focus:border-orange-400 outline-none transition-all duration-300"
-                      placeholder="XX XXX XX XX"
-                    />
-                  </div>
+                  <div className="flex gap-2 sm:gap-4 w-full">
+  <span className="shrink-0 px-4 py-2 bg-black/50 border border-orange-400/50 rounded-lg text-white text-sm sm:text-base">
+    +998
+  </span>
+  <input
+    type="tel"
+    value={phone}
+    onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
+    required
+    maxLength={9}
+    className="flex-1 min-w-0 px-4 py-2 rounded-lg bg-black/50 text-white border border-orange-400/50 focus:border-orange-400 outline-none text-sm sm:text-base transition-all duration-300"
+    placeholder="XX XXX XX XX"
+  />
+</div>
 
                   <button
                     type="submit"
