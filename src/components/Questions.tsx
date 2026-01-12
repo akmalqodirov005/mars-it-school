@@ -47,7 +47,7 @@ const Questions = () => {
   };
 
   return (
-    <section className="py-10 px-4 sm:py-10 sm:px-6 text-white">
+    <section className="py-20 px-4 sm:py-10 sm:px-6 text-white">
       <div className="max-w-4xl mx-auto">
         {/* Title */}
         <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-12 sm:mb-16">

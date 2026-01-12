@@ -93,7 +93,7 @@ const Section6 = () => {
   };
 
   return (
-    <section className="relative py-24 px-5 text-white">
+    <section className="relative py-20 px-5 text-white">
       <div className="max-w-7xl mx-auto text-center">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
           Shahar bo'ylab <span className="text-orange-500">7 ta «Mars IT»</span>{" "}
@@ -103,8 +103,8 @@ const Section6 = () => {
         {/* ===== HORIZONTAL SCROLL KARUSEL ===== */}
         <div
           style={{
-            scrollBehavior: "smooth", // Smooth scroll
-            WebkitOverflowScrolling: "touch", // Mobil uchun inertial scroll
+            scrollBehavior: "smooth",
+            WebkitOverflowScrolling: "touch",
           }}
           className="mt-10 flex gap-4 overflow-x-auto py-5 px-2 snap-x snap-mandatory"
         >
@@ -132,82 +132,82 @@ const Section6 = () => {
                   Ekskursiyaga yozilish
                 </button>
               </div>
-
-              {/* ===== CARD ICHIDAGI MODAL ===== */}
-              <AnimatePresence>
-                {activeIndex === i && (
-                  <>
-                    <motion.div
-                      className="absolute inset-0 bg-black/70 z-40"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      onClick={() => setActiveIndex(null)}
-                    />
-
-                    <motion.div
-                      className="absolute z-50 left-1/2 top-1/2
-                                 -translate-x-1/2 -translate-y-1/2
-                                 w-[90%] max-w-sm
-                                 bg-black border border-orange-400
-                                 rounded-2xl p-5"
-                      initial={{ scale: 0.9, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0.9, opacity: 0 }}
-                      transition={{ duration: 0.25 }}
-                    >
-                      <h2 className="text-xl font-bold text-center mb-4">
-                        🪐 Ekskursiyaga yozilish
-                      </h2>
-
-                      <form onSubmit={handleSubmit} className="space-y-3">
-                        <input
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          required
-                          placeholder="Ism"
-                          className="w-full px-3 py-2 rounded bg-black border border-orange-400/50 text-sm"
-                        />
-
-                        <div className="flex gap-2">
-                          <span className="px-3 py-2 border border-orange-400/50 rounded text-sm">
-                            +998
-                          </span>
-                          <input
-                            value={phone}
-                            onChange={(e) =>
-                              setPhone(e.target.value.replace(/\D/g, ""))
-                            }
-                            maxLength={9}
-                            required
-                            placeholder="XX XXX XX XX"
-                            className="flex-1 px-3 py-2 rounded bg-black border border-orange-400/50 text-sm"
-                          />
-                        </div>
-
-                        <button
-                          type="submit"
-                          disabled={loading}
-                          className="w-full py-2 bg-orange-400 text-black rounded-lg font-semibold text-sm"
-                        >
-                          {loading ? "Yuborilmoqda..." : "Jo'natish"}
-                        </button>
-                      </form>
-
-                      <button
-                        onClick={() => setActiveIndex(null)}
-                        className="mt-3 w-full text-xs opacity-80 hover:opacity-100"
-                      >
-                        Yopish
-                      </button>
-                    </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
             </motion.div>
           ))}
         </div>
       </div>
+
+      {/* ===== MODAL ===== */}
+      <AnimatePresence>
+        {activeIndex !== null && (
+          <motion.div
+            className="fixed inset-0 flex items-center justify-center z-50 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {/* Overlay */}
+            <div
+              className="absolute inset-0 bg-black/70"
+              onClick={() => setActiveIndex(null)}
+            />
+
+            {/* Modal content */}
+            <motion.div
+              className="relative w-full max-w-sm bg-black border border-orange-400 rounded-2xl p-5 z-10"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              <h2 className="text-xl font-bold text-center mb-4">
+                🪐 Ekskursiyaga yozilish
+              </h2>
+
+              <form onSubmit={handleSubmit} className="space-y-3">
+                <input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  placeholder="Ism"
+                  className="w-full px-3 py-2 rounded bg-black border border-orange-400/50 text-sm"
+                />
+
+                <div className="flex gap-2">
+                  <span className="px-3 py-2 border border-orange-400/50 rounded text-sm">
+                    +998
+                  </span>
+                  <input
+                    value={phone}
+                    onChange={(e) =>
+                      setPhone(e.target.value.replace(/\D/g, ""))
+                    }
+                    maxLength={9}
+                    required
+                    placeholder="XX XXX XX XX"
+                    className="flex-1 px-3 py-2 rounded bg-black border border-orange-400/50 text-sm"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-2 bg-orange-400 text-black rounded-lg font-semibold text-sm"
+                >
+                  {loading ? "Yuborilmoqda..." : "Jo'natish"}
+                </button>
+              </form>
+
+              <button
+                onClick={() => setActiveIndex(null)}
+                className="mt-3 w-full text-xs opacity-80 hover:opacity-100"
+              >
+                Yopish
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

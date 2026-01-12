@@ -32,7 +32,7 @@ const Section1: React.FC = () => {
       <AnimatePresence>
         {showModal && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-start justify-center pt-24 sm:pt-32"
+            className="fixed inset-0 z-50 flex items-start justify-center pt-10 sm:pt-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

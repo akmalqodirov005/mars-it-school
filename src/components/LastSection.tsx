@@ -47,7 +47,7 @@ const LastSection = () => {
   };
 
   return (
-    <div className="relative z-10 py-16 px-4 sm:py-20 sm:px-6 lg:px-8 text-white flex flex-col items-center gap-8">
+    <div className="relative z-10 py-20 px-4 sm:py-20 sm:px-6 lg:px-8 text-white flex flex-col items-center gap-8">
       {/* Sarlavha */}
       <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center max-w-xl leading-snug">
         Hali ham savollaringiz bormi? <br />

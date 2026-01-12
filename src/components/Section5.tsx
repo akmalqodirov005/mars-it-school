@@ -15,15 +15,15 @@ const Section5 = () => {
   const [activePerson, setActivePerson] = useState<Person>(null);
 
   return (
-    <section className="relative py-10 px-4 text-white">
+    <section className="relative py-20 px-6 text-white">
       <div className="max-w-7xl mx-auto text-center">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-16">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-20">
           O'quv maktabimiz asoschilari{" "}
           <span className="text-orange-500">ta'lim sohasidagi</span> tajribali
           tadbirkorlardir
         </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
           {/* ================= JAHONGIR ================= */}
           <PersonCard
             activePerson={activePerson}
@@ -34,9 +34,9 @@ const Section5 = () => {
             modalImg={Jahongir}
             modalText="Mars IT School va Modme asoschisi. IT va ta’lim sohasida zamonaviy loyihalarni rivojlantiradi."
           >
-            <p className="text-sm">Cambridge LC</p>
-            <p className="text-sm">Modme IT</p>
-            <p className="text-sm">Mars IT School</p>
+            <p className="text-base">Cambridge LC</p>
+            <p className="text-base">Modme IT</p>
+            <p className="text-base">Mars IT School</p>
           </PersonCard>
 
           {/* ================= ATXAM ================= */}
@@ -50,8 +50,8 @@ const Section5 = () => {
             modalText="Mars IT School asoschisi. Ta’lim va IT loyihalarni boshqarish bo‘yicha katta tajribaga ega."
             reverse
           >
-            <p className="text-sm">CEO Get Coffee</p>
-            <p className="text-sm">CEO Mars IT</p>
+            <p className="text-base">CEO Get Coffee</p>
+            <p className="text-base">CEO Mars IT</p>
           </PersonCard>
 
           {/* ================= RUSLAN ================= */}
@@ -64,8 +64,8 @@ const Section5 = () => {
             modalImg={Ruslan}
             modalText="Mars IT School CTO. Modme EdTech platformasining texnik asoschisi."
           >
-            <p className="text-sm">Direktor Mars IT</p>
-            <p className="text-sm">Modme asoschisi</p>
+            <p className="text-base">Direktor Mars IT</p>
+            <p className="text-base">Modme asoschisi</p>
           </PersonCard>
         </div>
       </div>
@@ -99,15 +99,15 @@ const PersonCard = ({
   reverse?: boolean;
 }) => (
   <motion.div
-    className="relative flex flex-col items-center space-y-4"
+    className="relative flex flex-col items-center space-y-6"
     animate={{ y: [0, -10, 0] }}
     transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
   >
     {!reverse && (
-      <div className="relative p-4 rounded-2xl border border-orange-400/40 bg-orange-500/10 text-white text-center">
+      <div className="relative p-5 rounded-2xl border border-orange-400/40 bg-orange-500/10 text-white text-center w-full">
         {children}
         <button
-          className="mt-4 px-4 py-2 rounded-full bg-orange-500 text-sm"
+          className="mt-4 px-5 py-2 rounded-full bg-orange-500 text-base font-semibold"
           onClick={() => setActivePerson(person)}
         >
           Batafsil
@@ -115,14 +115,14 @@ const PersonCard = ({
       </div>
     )}
 
-    <img src={img} className="w-36 h-36 rounded-full object-cover" />
-    <h2 className="text-lg font-semibold">{name}</h2>
+    <img src={img} className="w-44 h-44 rounded-full object-cover" />
+    <h2 className="text-xl font-semibold">{name}</h2>
 
     {reverse && (
-      <div className="relative p-4 rounded-2xl border border-orange-400/40 bg-orange-500/10 text-white text-center">
+      <div className="relative p-5 rounded-2xl border border-orange-400/40 bg-orange-500/10 text-white text-center w-full">
         {children}
         <button
-          className="mt-4 px-4 py-2 rounded-full bg-orange-500 text-sm"
+          className="mt-4 px-5 py-2 rounded-full bg-orange-500 text-base font-semibold"
           onClick={() => setActivePerson(person)}
         >
           Batafsil
@@ -136,7 +136,7 @@ const PersonCard = ({
         <>
           {/* Overlay */}
           <motion.div
-            className="absolute inset-0 bg-black/40 rounded-2xl z-40"
+            className="fixed inset-0 bg-black/50 z-40"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -145,11 +145,7 @@ const PersonCard = ({
 
           {/* Modal */}
           <motion.div
-            className="absolute z-50 left-1/2 top-1/2
-                       -translate-x-1/2 -translate-y-1/2
-                       bg-white text-gray-900
-                       w-[90%] max-w-xs
-                       rounded-xl p-4 shadow-2xl"
+            className="fixed z-50 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white text-gray-900 w-[90%] max-w-sm rounded-2xl p-5 shadow-2xl"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
@@ -158,7 +154,7 @@ const PersonCard = ({
             <PersonContent img={modalImg} name={name} text={modalText} />
             <button
               onClick={() => setActivePerson(null)}
-              className="mt-3 w-full py-2 rounded-lg border text-sm hover:bg-gray-100"
+              className="mt-4 w-full py-2 rounded-lg border text-base font-semibold hover:bg-gray-100"
             >
               Yopish
             </button>
@@ -183,10 +179,10 @@ const PersonContent = ({
   <>
     <img
       src={img}
-      className="w-28 h-28 mx-auto rounded-full mb-3 object-cover"
+      className="w-32 h-32 mx-auto rounded-full mb-4 object-cover"
     />
-    <h3 className="text-lg font-bold text-center">{name}</h3>
-    <p className="mt-2 text-center text-gray-700 text-sm leading-relaxed">
+    <h3 className="text-xl font-bold text-center">{name}</h3>
+    <p className="mt-3 text-center text-gray-700 text-base leading-relaxed">
       {text}
     </p>
   </>

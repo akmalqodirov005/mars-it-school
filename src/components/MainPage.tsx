@@ -107,7 +107,7 @@ const MainPage: React.FC<MainProps> = ({ onMusic }) => {
       {/* SECTION 3 */}
       <section
         id="section3"
-        className="container mx-auto mt-32 px-4 section"
+        className="container mt-20 mx-auto px-4 section"
       >
         <Section3 />
       </section>
@@ -115,7 +115,7 @@ const MainPage: React.FC<MainProps> = ({ onMusic }) => {
       {/* SECTION 4 */}
       <section
         id="section4"
-        className="container mx-auto mt-20 px-4 section"
+        className="container mx-auto px-4 section"
       >
         <Section4 />
       </section>
@@ -123,7 +123,7 @@ const MainPage: React.FC<MainProps> = ({ onMusic }) => {
       {/* SECTION 5 */}
       <section
         id="section5"
-        className="container mx-auto mt-20 px-4 section"
+        className="container mx-auto px-4 section"
       >
         <Section5 />
       </section>
@@ -131,7 +131,7 @@ const MainPage: React.FC<MainProps> = ({ onMusic }) => {
       {/* SECTION 6 */}
       <section
         id="section6"
-        className="container mx-auto mt-20 px-4 section"
+        className="container mx-auto px-4 section"
       >
         <Section6 />
       </section>
@@ -139,7 +139,7 @@ const MainPage: React.FC<MainProps> = ({ onMusic }) => {
       {/* QUESTIONS */}
       <section
         id="questions"
-        className="container mx-auto mt-20 px-4 section"
+        className="container mt-20 mb-20 mx-auto px-4 section"
       >
         <Questions />
       </section>
