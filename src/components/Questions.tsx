@@ -47,10 +47,10 @@ const Questions = () => {
   };
 
   return (
-    <section className="py-28 px-6 text-white">
+    <section className="py-10 px-6 text-white">
       <div className="max-w-4xl mx-auto">
         {/* Title */}
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-16">
+        <h1 className="text-2xl sm:text-xl md:text-3xl lg:text-4xl font-bold text-center mb-16">
           Ko'p so'raladigan savollar
         </h1>
 
@@ -63,11 +63,11 @@ const Questions = () => {
                 onClick={() => toggle(index)}
                 className="w-full flex justify-between items-center text-left"
               >
-                <h3 className="text-lg md:text-xl font-semibold">
+                <h3 className="text-lg sm:text-base md:text-xl font-semibold">
                   {item.q}
                 </h3>
 
-                <span className="text-2xl font-light transition">
+                <span className="text-2xl sm:text-xl md:text-2xl font-light transition">
                   {activeIndex === index ? "×" : "+"}
                 </span>
               </button>
@@ -82,7 +82,7 @@ const Questions = () => {
                 }`}
               >
                 <div className="overflow-hidden">
-                  <p className="leading-relaxed">
+                  <p className="leading-relaxed text-sm sm:text-xs md:text-base">
                     {item.a}
                   </p>
                 </div>

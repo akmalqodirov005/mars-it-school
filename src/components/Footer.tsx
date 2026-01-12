@@ -5,34 +5,36 @@ import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 gsap.registerPlugin(ScrollToPlugin);
 
 const Footer: React.FC = () => {
-  const sections = [
-    { id: "section1", label: "Home" },
-    { id: "section2", label: "Qisqacha" },
-    { id: "section3", label: "Talim" },
-    { id: "section4", label: "Qulaylik" },
-    { id: "section5", label: "Asoschilar" },
-    { id: "section6", label: "Filiallar" },
-    { id: "questions", label: "Savollar" },
+  const allSections = [
+    { id: "section1", label: "Home", icon: "🏠" },
+    { id: "section2", label: "Qisqacha", icon: "📄" },
+    { id: "section3", label: "Talim", icon: "🎓" },
+    { id: "section4", label: "Qulaylik", icon: "⚡" },
+    { id: "section5", label: "Asoschilar", icon: "👥" },
+    { id: "section6", label: "Filiallar", icon: "📍" },
+    { id: "questions", label: "Savollar", icon: "❓" },
   ];
+
+  const mobileSections = allSections.filter((sec) =>
+    ["section1", "section2", "section3", "questions"].includes(sec.id)
+  );
 
   const handleScroll = (id: string) => {
     gsap.to(window, { duration: 1, scrollTo: `#${id}`, ease: "power2.out" });
   };
 
   return (
-    <footer className="fixed bottom-0 w-full z-1000 bg-black/80 backdrop-blur-md text-white py-3 px-4">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center gap-3 md:gap-0">
-        {/* Copyright faqat md va undan katta ekranlarda */}
-        <div className="hidden md:block text-sm md:text-base font-semibold select-none">
+    <footer className="fixed bottom-0 w-full z-50 bg-black/90 backdrop-blur-md text-white">
+      {/* Desktop footer */}
+      <div className="hidden lg:flex container mx-auto justify-between items-center py-3 px-4">
+        <div className="text-sm md:text-base font-semibold select-none">
           &copy; 2026 akki
         </div>
-
-        {/* Navigation links */}
-        <ul className="flex flex-wrap md:flex-nowrap gap-3 md:gap-6 overflow-x-auto md:overflow-visible scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-gray-800">
-          {sections.map((sec) => (
+        <ul className="flex flex-wrap gap-6">
+          {allSections.map((sec) => (
             <li
               key={sec.id}
-              className="cursor-pointer hover:text-orange-400 focus:text-orange-400 transition-colors duration-300 px-2 py-1 rounded-md outline-none"
+              className="cursor-pointer hover:text-orange-400 px-2 py-1 rounded-md transition-colors duration-300"
               onClick={() => handleScroll(sec.id)}
               role="button"
               tabIndex={0}
@@ -45,6 +47,21 @@ const Footer: React.FC = () => {
             </li>
           ))}
         </ul>
+      </div>
+
+      {/* Mobile footer / App-like bottom nav */}
+      <div className="flex lg:hidden justify-around items-center py-2">
+        {mobileSections.map((sec) => (
+          <button
+            key={sec.id}
+            onClick={() => handleScroll(sec.id)}
+            className="flex flex-col items-center justify-center text-sm text-white hover:text-orange-400 transition-colors duration-300"
+            aria-label={`Scroll to ${sec.label}`}
+          >
+            <span className="text-xl">{sec.icon}</span>
+            <span className="mt-1">{sec.label}</span>
+          </button>
+        ))}
       </div>
     </footer>
   );

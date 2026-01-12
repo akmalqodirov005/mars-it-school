@@ -49,9 +49,10 @@ const LastSection = () => {
   };
 
   return (
-    <div className="relative z-10 py-20 px-4 sm:px-6 lg:px-8 text-white flex flex-col items-center gap-10
-                    bg-liniar-to-b from-black via-gray-900 to-black section">
-      
+    <div
+      className="relative z-10 py-20 px-4 sm:px-6 lg:px-8 text-white flex flex-col items-center gap-10
+                    bg-liniar-to-b from-black via-gray-900 to-black section"
+    >
       {/* Sarlavha */}
       <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center max-w-2xl leading-snug">
         Hali ham savollaringiz bormi? <br />

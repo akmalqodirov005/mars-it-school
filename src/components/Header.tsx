@@ -21,19 +21,20 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
 
   const toggleMusic = () => setIsMuted((p) => !p);
 
-  // Bars animation desktop va mobile uchun ishlaydi
+  // Bars animation
   useEffect(() => {
     if (!isMuted && !showMenu) {
       const interval = setInterval(() => {
-        setBars(Array.from({ length: 8 }, () => Math.random() * 14 + 2));
-      }, 120);
+        setBars((prev) =>
+          prev.map((h) => Math.max(2, Math.min(16, h + (Math.random() - 0.5) * 4)))
+        );
+      }, 300);
       return () => clearInterval(interval);
     } else {
       setBars(new Array(8).fill(4));
     }
   }, [isMuted, showMenu]);
 
-  // Telegramga ariza yuborish
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -64,31 +65,31 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
 
   return (
     <>
-      {/* ========================= HEADER ========================= */}
+      {/* ================= HEADER ================= */}
       <AnimatePresence>
         {!showMenu && (
           <motion.header
             className="fixed top-3 left-0 right-0 z-50"
-            initial={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
           >
-            {/* Audio faqat muted holatda ishlaydi */}
             <audio autoPlay loop muted={isMuted} src="/space-music.mp3" />
 
-            <div className="container mx-auto flex items-center justify-between px-4 h-16 bg-black/70 backdrop-blur-md rounded-2xl">
-              <img src={MarsLogoWhite} className="w-28 select-none" alt="Mars Logo" />
+            <div className="container mx-auto flex items-center justify-between px-4 h-16 bg-black/70 backdrop-blur-md rounded-2xl shadow-lg">
+              <img src={MarsLogoWhite} className="w-35 select-none" alt="Mars Logo" />
 
-              {/* ========================= DESKTOP ========================= */}
+              {/* Desktop */}
               <div className="hidden md:flex items-center gap-6 z-10 relative">
                 <a
                   href="tel:+998787777757"
-                  className="text-white hover:text-orange-400 transition-colors duration-200"
+                  className="text-white hover:text-orange-400 transition-colors duration-300"
                 >
                   📞 +998 (78) 777-77-57
                 </a>
 
-                {/* Music bars - desktop */}
+                {/* Music bars */}
                 <button
                   onClick={toggleMusic}
                   className="flex gap-1 items-end h-5"
@@ -99,23 +100,29 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
                       key={i}
                       className={`w-0.5 ${isMuted ? "bg-white" : "bg-orange-400"}`}
                       animate={{ height: h }}
-                      transition={{ duration: 0.12 }}
+                      transition={{
+                        type: "spring",
+                        damping: 10,
+                        stiffness: 100,
+                        mass: 0.3,
+                      }}
                     />
                   ))}
                 </button>
 
                 {/* Ariza button */}
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 10px rgba(255,165,0,0.7)" }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => setShowModal(true)}
-                  className="border border-orange-400 text-orange-400 px-4 py-2 rounded-lg hover:bg-orange-400 hover:text-black transition-all duration-200"
+                  className="border border-orange-400 text-orange-400 px-4 py-2 rounded-lg hover:bg-orange-400 hover:text-black transition-all duration-300"
                 >
                   Ariza
-                </button>
+                </motion.button>
               </div>
 
-              {/* ========================= MOBILE ========================= */}
+              {/* Mobile */}
               <div className="flex md:hidden items-center gap-4">
-                {/* Music bars mobile */}
                 <button
                   onClick={toggleMusic}
                   className="flex gap-0.5 items-end h-4"
@@ -125,16 +132,20 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
                     <motion.div
                       key={i}
                       className={`w-0.5 ${isMuted ? "bg-white" : "bg-orange-400"}`}
-                      animate={{ height: h / 2 }} // mobile uchun kichikroq
-                      transition={{ duration: 0.12 }}
+                      animate={{ height: h / 2 }}
+                      transition={{
+                        type: "spring",
+                        damping: 10,
+                        stiffness: 100,
+                        mass: 0.3,
+                      }}
                     />
                   ))}
                 </button>
 
-                {/* Menu button */}
                 <button
                   onClick={() => setShowMenu(true)}
-                  className="text-white text-2xl hover:text-orange-400 transition-colors duration-200"
+                  className="text-white text-2xl hover:text-orange-400 transition-colors duration-300"
                   aria-label="Open menu"
                 >
                   ☰
@@ -145,76 +156,61 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
         )}
       </AnimatePresence>
 
-      {/* ========================= FULLSCREEN MOBILE MENU ========================= */}
+      {/* ================= MOBILE MENU ================= */}
       <AnimatePresence>
         {showMenu && (
-          <>
-            <motion.div
-              className="fixed inset-0 z-40 bg-black/90 backdrop-blur-xl"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
+          <motion.div
+            className="fixed inset-0 z-50 flex flex-col bg-black/90 backdrop-blur-xl p-6 pt-24 gap-6"
+            initial={{ y: "-100%", opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: "-100%", opacity: 0 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+          >
+            <button
               onClick={() => setShowMenu(false)}
+              className="absolute top-6 right-6 text-3xl text-white hover:text-orange-400 transition-all duration-300"
+            >
+              ✕
+            </button>
+
+            <img
+              src={MarsLogoWhite}
+              className="w-36 mx-auto mb-6"
+              alt="Mars Logo"
             />
 
-            <motion.div
-              className="fixed inset-0 z-50 flex flex-col items-center justify-center text-white gap-8 p-6"
-              initial={{ scale: 0.8, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: -10 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
+            <a
+              href="tel:+998787777757"
+              className="text-lg text-white hover:text-orange-400 text-center transition-colors duration-300"
             >
-              <motion.img
-                src={MarsLogoWhite}
-                className="w-40 mb-4"
-                alt="Mars Logo"
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.1, duration: 0.4 }}
-              />
+              📞 +998 (78) 777-77-57
+            </a>
 
-              <motion.a
-                href="tel:+998787777757"
-                className="text-xl hover:text-orange-400 transition-colors duration-200"
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.3 }}
-              >
-                📞 +998 (78) 777-77-57
-              </motion.a>
+            <motion.button
+              onClick={() => {
+                setShowMenu(false);
+                setTimeout(() => setShowModal(true), 300);
+              }}
+              whileHover={{ scale: 1.03, boxShadow: "0 0 15px rgba(255,165,0,0.6)" }}
+              whileTap={{ scale: 0.97 }}
+              className="mx-auto w-full max-w-xs py-3 bg-transparent border-2 border-orange-400 text-orange-400 font-semibold rounded-lg hover:bg-orange-400 hover:text-black transition-all duration-300"
+            >
+              Ariza yuborish
+            </motion.button>
 
-              <motion.button
-                onClick={() => {
-                  setShowMenu(false);
-                  setTimeout(() => setShowModal(true), 300);
-                }}
-                className="mt-4 border-2 border-orange-400 px-8 py-3 rounded-xl text-orange-400 hover:bg-orange-400 hover:text-black transition-all duration-200 hover:scale-105"
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.3 }}
-              >
-                Ariza yuborish
-              </motion.button>
-
-              <motion.button
-                onClick={() => setShowMenu(false)}
-                className="absolute top-8 right-8 text-4xl hover:text-orange-400 hover:rotate-90 transition-all duration-300"
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                transition={{ delay: 0.15, duration: 0.3 }}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                aria-label="Close menu"
-              >
-                ✕
-              </motion.button>
-            </motion.div>
-          </>
+            <a
+              href="https://t.me/mars_it_school"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-center text-orange-400 hover:underline mt-4"
+            >
+              @mars_it_school
+            </a>
+          </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ========================= MODAL ========================= */}
+      {/* ================= MODAL ================= */}
       <AnimatePresence>
         {showModal && (
           <>
@@ -223,6 +219,7 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
               onClick={() => setShowModal(false)}
             />
 
@@ -231,14 +228,13 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="bg-liniar-to-br from-gray-900 to-black border-2 border-orange-400 rounded-2xl p-8 w-full max-w-md relative shadow-2xl">
                 <button
                   onClick={() => setShowModal(false)}
                   className="absolute top-4 right-4 text-white hover:text-orange-400 text-2xl transition-colors"
-                  aria-label="Close modal"
                 >
                   ✕
                 </button>
@@ -254,32 +250,32 @@ const Header: React.FC<HeaderProps> = ({ onMusic }) => {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       required
-                      className="w-full px-4 py-2 rounded-lg bg-black/50 text-white border border-orange-400/50 focus:border-orange-400 outline-none transition-colors"
+                      className="w-full px-4 py-2 rounded-lg bg-black/50 text-white border border-orange-400/50 focus:border-orange-400 outline-none transition-all duration-300"
                       placeholder="Ism"
                     />
                   </div>
 
-                  <div>
-                    <div className="flex gap-2">
-                      <span className="px-4 py-2 bg-black/50 border border-orange-400/50 rounded-lg text-white">
-                        +998
-                      </span>
-                      <input
-                        type="tel"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
-                        required
-                        maxLength={9}
-                        className="flex-1 px-4 py-2 rounded-lg bg-black/50 text-white border border-orange-400/50 focus:border-orange-400 outline-none transition-colors"
-                        placeholder="XX XXX XX XX"
-                      />
-                    </div>
+                  <div className="flex gap-2">
+                    <span className="px-4 py-2 bg-black/50 border border-orange-400/50 rounded-lg text-white">
+                      +998
+                    </span>
+                    <input
+                      type="tel"
+                      value={phone}
+                      onChange={(e) =>
+                        setPhone(e.target.value.replace(/\D/g, ""))
+                      }
+                      required
+                      maxLength={9}
+                      className="flex-1 px-4 py-2 rounded-lg bg-black/50 text-white border border-orange-400/50 focus:border-orange-400 outline-none transition-all duration-300"
+                      placeholder="XX XXX XX XX"
+                    />
                   </div>
 
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-3 bg-orange-400 text-black font-semibold rounded-lg hover:bg-orange-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-3 bg-orange-400 text-black font-semibold rounded-lg hover:bg-orange-500 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loading ? "Yuborilmoqda..." : "Yuborish"}
                   </button>

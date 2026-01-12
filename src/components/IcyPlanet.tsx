@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import * as THREE from 'three';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import * as THREE from "three";
+import { motion, AnimatePresence } from "framer-motion";
 
 /* =======================
    WebGL check (TypeScript safe)
 ======================= */
 const isWebGLAvailable = (): boolean => {
   try {
-    const canvas = document.createElement('canvas');
+    const canvas = document.createElement("canvas");
     return !!(
       window.WebGLRenderingContext &&
-      (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'))
+      (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
     );
   } catch {
     return false;
@@ -54,7 +54,7 @@ const MarsShader = {
       float emissive=smoothstep(0.6,0.9,n2); color+=glowCyan*emissive*0.3;
       gl_FragColor=vec4(color,1.0);
     }
-  `
+  `,
 };
 
 /* =======================
@@ -70,21 +70,38 @@ const Mars: React.FC<MarsProps> = ({ radius, segments }) => {
   const materialRef = useRef<THREE.ShaderMaterial>(null);
 
   useFrame((state, delta) => {
-    if(meshRef.current) meshRef.current.rotation.y += 0.05 * delta;
-    if(materialRef.current) materialRef.current.uniforms.time.value = state.clock.elapsedTime;
+    if (meshRef.current) meshRef.current.rotation.y += 0.05 * delta;
+    if (materialRef.current)
+      materialRef.current.uniforms.time.value = state.clock.elapsedTime;
   });
 
   return (
-    <group rotation={[-0.35,0,0]}>
+    <group rotation={[-0.35, 0, 0]}>
       <mesh ref={meshRef}>
         <sphereGeometry args={[radius, segments, segments]} />
-        <shaderMaterial ref={materialRef} vertexShader={MarsShader.vertexShader} fragmentShader={MarsShader.fragmentShader} uniforms={{ time: { value: 0 } }} />
+        <shaderMaterial
+          ref={materialRef}
+          vertexShader={MarsShader.vertexShader}
+          fragmentShader={MarsShader.fragmentShader}
+          uniforms={{ time: { value: 0 } }}
+        />
       </mesh>
       <mesh scale={1.15}>
-        <sphereGeometry args={[radius, Math.floor(segments/1.5), Math.floor(segments/1.5)]} />
-        <meshBasicMaterial color="#66ccff" transparent opacity={0.15} side={THREE.BackSide} />
+        <sphereGeometry
+          args={[
+            radius,
+            Math.floor(segments / 1.5),
+            Math.floor(segments / 1.5),
+          ]}
+        />
+        <meshBasicMaterial
+          color="#66ccff"
+          transparent
+          opacity={0.15}
+          side={THREE.BackSide}
+        />
       </mesh>
-      <pointLight intensity={2} color="#66ccff" distance={radius*4} />
+      <pointLight intensity={2} color="#66ccff" distance={radius * 4} />
     </group>
   );
 };
@@ -92,27 +109,47 @@ const Mars: React.FC<MarsProps> = ({ radius, segments }) => {
 /* =======================
    PLANET RINGS
 ======================= */
-interface RingsProps { radius: number; }
+interface RingsProps {
+  radius: number;
+}
 
 const PlanetRings: React.FC<RingsProps> = ({ radius }) => {
   const ringRef = useRef<THREE.Mesh>(null);
   useFrame(() => {
-    if(ringRef.current) ringRef.current.rotation.z += 0.008;
+    if (ringRef.current) ringRef.current.rotation.z += 0.008;
   });
 
   return (
-    <group rotation={[-Math.PI/5,4,0]}>
+    <group rotation={[-Math.PI / 5, 4, 0]}>
       <mesh ref={ringRef}>
-        <ringGeometry args={[radius*2,radius*2.2,128]} />
-        <meshBasicMaterial color="#66ccff" transparent opacity={0.35} side={THREE.DoubleSide} depthWrite={false}/>
+        <ringGeometry args={[radius * 2, radius * 2.2, 128]} />
+        <meshBasicMaterial
+          color="#66ccff"
+          transparent
+          opacity={0.35}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+        />
       </mesh>
       <mesh>
-        <ringGeometry args={[radius*1.4,radius*2.5,128]} />
-        <meshBasicMaterial color="#ffffff" transparent opacity={0.25} side={THREE.DoubleSide} depthWrite={false}/>
+        <ringGeometry args={[radius * 1.4, radius * 2.5, 128]} />
+        <meshBasicMaterial
+          color="#ffffff"
+          transparent
+          opacity={0.25}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+        />
       </mesh>
       <mesh>
-        <ringGeometry args={[radius*1.6,radius*2.8,128]} />
-        <meshBasicMaterial color="#66ccff" transparent opacity={0.15} side={THREE.DoubleSide} depthWrite={false}/>
+        <ringGeometry args={[radius * 1.6, radius * 2.8, 128]} />
+        <meshBasicMaterial
+          color="#66ccff"
+          transparent
+          opacity={0.15}
+          side={THREE.DoubleSide}
+          depthWrite={false}
+        />
       </mesh>
     </group>
   );
@@ -127,31 +164,40 @@ const IcePlanet: React.FC = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if(window.innerWidth < 640){
-        setMarsRadius(6); setSegments(64);
-      }
-      else if(window.innerWidth < 1024){
-        setMarsRadius(8); setSegments(100);
-      }
-      else{
-        setMarsRadius(10); setSegments(150);
+      if (window.innerWidth < 640) {
+        setMarsRadius(6);
+        setSegments(64);
+      } else if (window.innerWidth < 1024) {
+        setMarsRadius(8);
+        setSegments(100);
+      } else {
+        setMarsRadius(10);
+        setSegments(150);
       }
     };
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  if(!isWebGLAvailable()){
-    return <div className="text-white text-center py-12">WebGL qo'llab-quvvatlanmaydi</div>
+  if (!isWebGLAvailable()) {
+    return (
+      <div className="text-white text-center py-12">
+        WebGL qo'llab-quvvatlanmaydi
+      </div>
+    );
   }
 
   return (
-    <div className="w-full h-125 sm:h-150 md:h-175 lg:h-200">
-      <Canvas camera={{ position:[30,10,-45], fov:60 }}>
-        <ambientLight intensity={0.2}/>
-        <directionalLight position={[10,10,10]} intensity={0.6}/>
-        <directionalLight position={[-8,5,-6]} intensity={0.25} color="#66ccff"/>
+    <div className="w-full aspect-square max-h-105 sm:max-h-130">
+      <Canvas camera={{ position: [30, 10, -45], fov: 60 }}>
+        <ambientLight intensity={0.2} />
+        <directionalLight position={[10, 10, 10]} intensity={0.6} />
+        <directionalLight
+          position={[-8, 5, -6]}
+          intensity={0.25}
+          color="#66ccff"
+        />
         <Mars radius={marsRadius} segments={segments} />
         <PlanetRings radius={marsRadius} />
         <OrbitControls enableZoom={false} enablePan={true} />
@@ -161,81 +207,114 @@ const IcePlanet: React.FC = () => {
 };
 
 /* =======================
-   SECTION2 WITH MODAL
+   Section2 With Modal (Responsive)
 ======================= */
 const Section2: React.FC = () => {
-  const [showModal,setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   return (
-    <section className="relative py-12 px-6 flex-1 text-white flex flex-col items-center justify-center">
-      <h1 className="text-3xl md:text-4xl font-bold text-center">
-        <span className="text-orange-500">Mars IT</span>da o'qish kimlar uchun mos keladi?
+    <section className="relative py-8 px-4 sm:py-12 sm:px-6 flex flex-col items-center text-white">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center">
+        <span className="text-orange-500">Mars IT</span>da o'qish kimlar uchun
+        mos keladi?
       </h1>
 
-      <p className="mt-4 text-center text-gray-300 font-medium max-w-2xl">
+      <p className="mt-2 sm:mt-4 text-center text-gray-300 font-medium text-sm sm:text-base max-w-sm sm:max-w-2xl">
         <b>Darslar 9 yoshdan 17 yoshgacha barcha bolalar uchun,</b> ayniqsa
-        kompyuter o'yinlaridan chalg'imaydigan va dasturlash olamiga qiziqishi katta bolganlar uchun
+        kompyuter o'yinlaridan chalg'imaydigan va dasturlash olamiga qiziqishi
+        katta bolganlar uchun
       </p>
 
       <button
-        onClick={()=>setShowModal(true)}
-        className="mt-6 px-8 py-3 rounded-2xl bg-orange-500 text-white font-semibold hover:bg-orange-600 transition shadow-lg"
+        onClick={() => setShowModal(true)}
+        className="mt-4 sm:mt-6 px-6 sm:px-8 py-2 sm:py-3 rounded-2xl bg-orange-500 text-white font-semibold hover:bg-orange-600 transition shadow-lg text-sm sm:text-base"
       >
         Batafsil
       </button>
 
       <AnimatePresence>
         {showModal && (
-          <>
-            <motion.div
-              onClick={()=>setShowModal(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-md z-40"
-              initial={{opacity:0}}
-              animate={{opacity:1}}
-              exit={{opacity:0}}
-            />
+          <motion.div
+            className="absolute inset-0 z-40 flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowModal(false)} // 👈 TASHQARISI BOSILSA
+          >
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
 
+            {/* MODAL */}
             <motion.div
-              className="fixed inset-0 z-50 flex items-center justify-center px-4"
-              initial={{opacity:0, scale:0.92}}
-              animate={{opacity:1, scale:1}}
-              exit={{opacity:0, scale:0.95}}
-              transition={{duration:0.3, ease:"easeOut"}}
-              onClick={(e) => e.stopPropagation()}
+              className="relative z-50 bg-white text-gray-900
+                   w-full max-w-xs sm:max-w-sm
+                   rounded-2xl p-4 sm:p-6 shadow-2xl mx-4"
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.9 }}
+              transition={{ duration: 0.25 }}
+              onClick={(e) => e.stopPropagation()} // 👈 MODAL ICHI BOSILSA YOPILMAYDI
             >
-              <div className="bg-white text-gray-900 max-w-3xl w-full rounded-2xl p-8 shadow-2xl space-y-6">
-                <div className="rounded-lg bg-gray-200 h-48 flex items-center justify-center bg-[url('/placeholder-phone.png')] bg-cover bg-center">
-                  <h3 className="text-xl font-bold text-gray-900 text-center px-4">
-                    Bola kun-u tun vaqtini gadjetlar kompyuter yoki noutbukda o'tqazadi
-                  </h3>
-                </div>
-                <div className="rounded-lg bg-gray-200 h-48 flex items-center justify-center bg-[url('/placeholder-pc.png')] bg-cover bg-center">
-                  <h3 className="text-xl font-bold text-gray-900 text-center px-4">
-                    Bola kompyuter o'yinlarini yaxshi ko'radi va o'z o'yinini yaratishni hohlaydi
-                  </h3>
-                </div>
+              <h3 className="text-lg sm:text-xl font-bold text-center">
+                Bola kompyuter va gadjetlarda ko‘p vaqt o'tkazadi
+              </h3>
 
-                <h2 className="text-center text-lg md:text-xl font-semibold text-gray-700">
-                  O'quv markazimizda 0 dan boshlab kompyuter savodxonligi, dasturlash asoslari va o'yin yaratishni o'rganadigan kurslar mavjud
-                </h2>
+              <div className="grid grid-cols-1 gap-2 mt-3">
+                <MiniCard
+                  title="O'yinlar va IT"
+                  text="Bola o'yinlardan chalg‘imasdan dasturlashga qiziqadi"
+                />
+                <MiniCard
+                  highlight
+                  title="O'z o'yinini yaratadi"
+                  text="Kreativ IT olamida o‘z loyihasini yaratishga intiladi"
+                />
+                <MiniCard
+                  title="Mars IT School"
+                  text="0 dan boshlab dasturlashni o‘rganadi"
+                />
+              </div>
 
-                <div className="text-center mt-4">
-                  <button
-                    onClick={()=>setShowModal(false)}
-                    className="px-6 py-2 rounded-lg border border-gray-300 font-medium hover:bg-gray-100 transition"
-                  >
-                    Yopish
-                  </button>
-                </div>
+              <div className="text-center pt-4">
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="px-4 py-2 rounded-lg border border-gray-300
+                       font-medium text-sm sm:text-base
+                       hover:bg-gray-100 transition"
+                >
+                  Yopish
+                </button>
               </div>
             </motion.div>
-          </>
+          </motion.div>
         )}
       </AnimatePresence>
     </section>
   );
 };
-
+{
+  /* ================= MiniCard Component ================= */
+}
+const MiniCard = ({
+  title,
+  text,
+  highlight = false,
+}: {
+  title: string;
+  text: string;
+  highlight?: boolean;
+}) => (
+  <div
+    className={`p-3 rounded-lg ${
+      highlight
+        ? "bg-orange-500 text-white"
+        : "border border-gray-200 bg-gray-50"
+    }`}
+  >
+    <h4 className="text-sm sm:text-base font-semibold">{title}</h4>
+    <p className="mt-1 text-xs sm:text-sm opacity-90">{text}</p>
+  </div>
+);
 /* =======================
    WRAPPER COMPONENT
 ======================= */
@@ -249,7 +328,7 @@ const IcePlanetSection: React.FC = () => {
         <Section2 />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default IcePlanetSection;
